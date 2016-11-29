@@ -5,9 +5,8 @@ var gulp          = require('gulp'),
     sourcemaps    = require('gulp-sourcemaps'),
     uglify        = require('gulp-uglify'),
     gulpif        = require('gulp-if'),
-    rename        = require('gulp-rename'),
-    //connect       = require('gulp-connect')
-    connect = require('gulp-connect-multi')();
+    rename        = require('gulp-rename'),    
+    connect 	  = require('gulp-connect-multi')();
 
 var env = process.env.NODE_ENV || 'development';
 var dir = 'builds/development';
@@ -19,13 +18,13 @@ gulp.task('jade', function(){
   if(env === "production") {
     dir = 'builds/production';
   }
-  return gulp.src('src/**/*.jade')
+  return gulp.src('src/*.jade')
     .pipe(jade({
       pretty : env === 'development'
     }))
     .pipe(gulp.dest(dir))
     .pipe(connect.reload());
-})
+});
 
 gulp.task('js', function() {
   if(env === "development") {
@@ -38,7 +37,7 @@ gulp.task('js', function() {
         .pipe(browserify({
           insertGlobals : true,
           debug : env === 'development'
-        }))
+         }))
         .pipe(gulpif(env === 'production', uglify()))
         .pipe(rename('app.js'))
         .pipe(gulp.dest(dir+"/js"))
@@ -48,14 +47,14 @@ gulp.task('js', function() {
 gulp.task('sass',function(){
   var config = {};
   if(env === "development") {
-    config.sourceComments = "map"
-    dir = 'builds/development'
-  }
+    config.sourceComments = "map";
+    dir = 'builds/development';
+  };
   if(env === "production") {
-    config.outputStyle = "compressed"
-    dir = 'builds/production'
-  }
-  return gulp.src('src/sass/main.scss')
+    config.outputStyle = "compressed";
+    dir = 'builds/production';
+  };
+  return gulp.src('src/**/*.scss')
     .pipe(sass(config))
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
@@ -64,13 +63,6 @@ gulp.task('sass',function(){
     .pipe(gulp.dest(dir+"/css"))
     .pipe(connect.reload());
 });
-
-/*gulp.task('connect', function() {
-  connect.server({
-    root: dir,
-    livereload: true
-  });
-});*/
 
 gulp.task('connect', connect.server({
   root: [dir],
@@ -82,9 +74,10 @@ gulp.task('connect', connect.server({
 }));
 
 gulp.task('watch', function(){
-  gulp.watch('src/templates/partials/**/*.jade', ['jade'])
-  gulp.watch('src/js/**/*.js', ['js'])
-  gulp.watch('src/sass/**/*.scss', ['sass'])
+  gulp.watch('src/*.jade', ['jade']);	
+  gulp.watch('src/templates/partials/**/*.jade', ['jade']);
+  gulp.watch('src/js/**/*.js', ['js']);
+  gulp.watch('src/sass/**/*.scss', ['sass']);
 });
 
 gulp.task('default',['jade','js','sass','watch','connect']);

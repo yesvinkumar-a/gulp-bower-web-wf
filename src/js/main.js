@@ -1,6 +1,8 @@
 var $ = require('../../bower_components/jquery/dist/jquery.js');
-var sayHello = require('./modules/hello.js');
+
+var init = require('./modules/init.js');
 var jqmod = require('./modules/jq-module.js');
-sayHello();
+
+init();
 jqmod();
-$('h1').text("Text form Jquery global scope");
+
