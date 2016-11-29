@@ -1,0 +1,21 @@
+{
+  "name": "web-workflow",
+  "description": "Web Starter Project using gulp",
+  "main": "index.js",
+  "authors": [
+    "Yesvinkumar"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/yesvinkumar-a/gulp-web-workflow",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap-sass": "^3.3.7",
+    "font-awesome": "fontawesome#^4.7.0"
+  }
+}
